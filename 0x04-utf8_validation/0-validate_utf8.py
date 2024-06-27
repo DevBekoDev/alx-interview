@@ -1,29 +1,29 @@
 #!/usr/bin/python3
 """
-validate if a sequance of input follows the utf-8 encoding pattern
+check a seqance of an inpit is utf-8 valid
 """
 
 
 def validUTF8(data):
     """
-    validate if data are UTF8 chars
+    using the bit manipualtion to validate utf8 encoding
     """
-    n = len(data)
-    next = 0
-    for i in data:
-        if next == 0:
-            if (i >> 5) == 0b110:  # for 2 bytes
-                next = 1
-            elif (i >> 4) == 0b1110:  # for 3 bytes
-                next = 2
-            elif (i >> 3) == 0b11110:  # for 4 bytes
-                next = 3
-            elif (i >> 7) != 0b0:
+
+    count = 0
+    for n in data:
+        if count == 0:
+            if (n >> 7) == 0:
+                count = 0
+            elif (n >> 5) == 0x06:
+                count = 1
+            elif (n >> 4) == 0x0e:
+                count = 2
+            elif (n >> 3) == 0x1e:
+                count = 3
+            else:
                 return False
         else:
-            if (i >> 6) != 0b10:  # checking next occurence
+            if (n >> 6) != 0x02:
                 return False
-            next -= 1
-    if next == 0:
-        return True
-    return False
+            count -= 1
+    return count == 0
