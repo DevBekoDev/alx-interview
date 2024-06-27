@@ -5,6 +5,9 @@ validate if a sequance of input follows the utf-8 encoding pattern
 
 
 def validUTF8(data):
+    """
+    validate if data are UTF8 chars
+    """
     n = len(data)
     next = 0
     for i in data:
