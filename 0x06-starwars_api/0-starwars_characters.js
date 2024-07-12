@@ -31,7 +31,7 @@ else
             //console.log(response.statuscode);
             //console.log(body);
             let result = JSON.parse(body);
-            console.log(result);
+            
             for(let i = 0; i < result.characters.length; i ++)
                 {
                     request(result.characters[i], (error,response,content) =>
