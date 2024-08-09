@@ -1,36 +1,49 @@
 #!/usr/bin/python3
-"""Prime Game"""
+"""prime game"""
+
 
 def isWinner(x, nums):
     """Function to determain the winner in prime game"""
-    mariaWinsCount = 0  # Counter for Maria's wins
-    benWinsCount = 0    # Counter for Ben's wins
 
+    # Counter for Maria's wins
+    mariaWinsCount = 0
+    # Counter for Ben's wins
+    benWinsCount = 0
     for num in nums:
-        roundsSet = list(range(1, num + 1))  # List of numbers from 1 to num
-        primesSet = primes_in_range(1, num)  # List of prime numbers from 1 to num
-
-        if not primesSet:  # If no primes, Ben automatically wins
+        # List of numbers from 1 to num
+        roundsSet = list(range(1, num + 1))
+        # List of prime numbers from 1 to num
+        primesSet = primes_in_range(1, num)
+        # If no primes, Ben automatically wins
+        if not primesSet:
             benWinsCount += 1
             continue
 
-        isMariaTurns = True  # Boolean to track whose turn it is
+        # Boolean to track whose turn it is
+        isMariaTurns = True
 
         while(True):
-            if not primesSet:  # If no primes left, determine the winner of the round
+            # If no primes left, determine the winner of the round
+            if not primesSet:
                 if isMariaTurns:
-                    benWinsCount += 1  # Ben wins if it was Maria's turn and no primes left
+                    # Ben wins if it was Maria's turn and no primes left
+                    benWinsCount += 1
                 else:
-                    mariaWinsCount += 1  # Maria wins if it was Ben's turn and no primes left
+                    # Maria wins if it was Ben's turn and no primes left
+                    mariaWinsCount += 1
                 break  # Exit the loop
 
-            smallestPrime = primesSet.pop(0)  # Remove the smallest prime from the list
-            roundsSet.remove(smallestPrime)   # Remove the smallest prime from the rounds set
+            # Remove the smallest prime from the list
+            smallestPrime = primesSet.pop(0)
+
+            # Remove the smallest prime from the rounds set
+            roundsSet.remove(smallestPrime)
 
             # Remove all multiples of the smallest prime from the rounds set
             roundsSet = [x for x in roundsSet if x % smallestPrime != 0]
 
-            isMariaTurns = not isMariaTurns  # Switch turns between Maria and Ben
+            # Switch turns between Maria and Ben
+            isMariaTurns = not isMariaTurns
 
     # Determine the overall winner
     if mariaWinsCount > benWinsCount:
@@ -38,19 +51,29 @@ def isWinner(x, nums):
     if mariaWinsCount < benWinsCount:
         return "Ben"
 
-    return None  # Return None if it's a tie
+    # Return None if it's a tie
+    return None
+
 
 def is_prime(n):
     """True if n is prime, else False."""
+    # If n is less than 2, it is not a prime number
     if n < 2:
         return False
-    for i in range(2, int(n ** 0.5) + 1):  # Check divisibility up to the square root of n
+
+    # Check divisibility up to the square root of n
+    for i in range(2, int(n ** 0.5) + 1):
         if n % i == 0:
             return False
+
+    # n is a prime number
     return True
+
 
 def primes_in_range(start, end):
     """a list of prime numbers between start and end (inclusive)."""
-    primes = [n for n in range(start, end + 1) if is_prime(n)]  # List comprehension to find primes
-    return primes
+    # List comprehension to find primes in the given range
+    primes = [n for n in range(start, end + 1) if is_prime(n)]
 
+    # Return the list of primes
+    return primes
