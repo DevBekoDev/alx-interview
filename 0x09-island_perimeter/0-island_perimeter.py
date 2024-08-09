@@ -5,19 +5,24 @@ island paramter
 
 
 def island_perimeter(grid):
-    R, C = len(grid), len(grid[0])
-    perimeter = 0
-    # Traverse the grid
-    for i in range(R):
-       for j in range(C):
-          if grid[i][j] == 1:
-                perimeter += 4
-                # Check whether top neighbour is a land and decrement it by 2
-                # as it intersects
-                if i > 0 and grid[i-1][j] == 1:
-                    perimeter -= 2
-                # Check left neighbour is a land and decrement it by 2
-                # as it intersects
-                if j > 0 and grid[i][j-1] == 1:
-                    perimeter -= 2
-    return perimeter
+    """Return the perimeter of an island.
+    The grid represents water by 0 and land by 1.
+    Args:
+        grid (list): A list of lists of integers representing an island.
+    Returns:
+        The perimeter of the island defined in grid.
+    """
+    width = len(grid[0])
+    height = len(grid)
+    edges = 0
+    size = 0
+
+    for i in range(height):
+        for j in range(width):
+            if grid[i][j] == 1:
+                size += 1  # Increment size for each land cell
+                if (j > 0 and grid[i][j - 1] == 1):
+                    edges += 1  # Increment edges if left neighbor is land
+                if (i > 0 and grid[i - 1][j] == 1):
+                    edges += 1  # Increment edges if top neighbor is land
+    return size * 4 - edges * 2  # Calculate perimeter
